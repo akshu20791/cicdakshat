@@ -10,7 +10,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t akshu20791/endtoendproject .'
+                    sh 'docker build -t akshu20791/endtoendproject:v1 .'
                 }
             }
         }
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push akshu20791/endtoendproject:latest'
+                    sh 'docker push akshu20791/endtoendproject:v1'
                 }
             }
         }
