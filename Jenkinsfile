@@ -22,6 +22,13 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to k8s1'){
+            steps{
+                script{
+                     kubernetesDeploy (configs: akshat.yml ,kubeconfigId: 'k8sconfigpwd')
+                   
+                }
+            }
         stage('Deploy to k8s'){
             steps{
                 script{
