@@ -8,7 +8,7 @@
 		<version>2.7.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.javatechie</groupId>
+	<groupId>com.truelearning</groupId>
 	<artifactId>devops-integration</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>devops-integration</name>

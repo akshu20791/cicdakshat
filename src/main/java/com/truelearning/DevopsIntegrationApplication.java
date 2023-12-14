@@ -1,4 +1,4 @@
-package com.javatechie;
+package com.truelearning;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +11,7 @@ public class DevopsIntegrationApplication {
 
 	@GetMapping
 	public String message(){
-		return "welcome to javatechie";
+		return "welcome to True learning by Akshat";
 	}
 
 	public static void main(String[] args) {
