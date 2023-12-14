@@ -22,14 +22,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to k8s1'){
-            steps{
-                script{
-                    // kubernetesDeploy configs: 'akshat.yml', kubeConfig: [path: ''], kubeconfigId: 'k8sconfigpwd', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
-                   
-                }
-            }
-        }
+        
         stage('Deploy to k8s'){
             steps{
                 script{
