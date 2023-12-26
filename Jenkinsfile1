@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+    stages{
+        stage('checkout'){
+            steps{
+                git url:'https://github.com/akshu20791/cicdakshat/'
+                echo 'checkout completed'
+            }
+               
+            }
+        stage('codecompile'){
+            steps{
+                echo 'convert the code from userreadable language to machine readable'
+                sh "mvn compile"
+            }
+        }
+       stage('parallelstage'){
+         parallel{
+           stage('codetesting'){
+            steps{
+                echo "test the functionality of the code"
+                echo "test cases getting executed"
+                sh "mvn test"
+            }
+        }
+         stage('quality-assurance'){
+            steps{
+                echo "checking the quality and bugs in the code"
+                sh "mvn pmd:pmd"
+                echo "code analysis done"
+                recordIssues(tools: [pmdParser()])
+              }
+            }
+          }
+        }
+        stage('package the code'){
+            steps{
+                echo "package the code"
+                sh "mvn package"
+            }
+        }
+        }
+}
