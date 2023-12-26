@@ -1,0 +1,55 @@
+pipeline {
+// use of variables
+    environment{
+        FNAME = "john"
+        ENV = "prod"
+        compileprocess = "compile"
+        goaltesting = "test"
+        goalpackage = "package"
+        goalqa = "pmd:pmd"
+    }
+    agent any
+    stages{
+        stage('checkout'){
+            steps{
+                git url:'https://github.com/akshu20791/cicdakshat/'
+                echo 'checkout completed'
+                sh "echo hello ${FNAME}"
+            }
+               
+            }
+        stage('codecompile'){
+            steps{
+                echo 'convert the code from userreadable language to machine readable'
+                sh "mvn ${compileprocess}"
+            }
+        }
+       stage('parallelstage'){
+         parallel{
+           stage('codetesting'){
+            steps{
+                echo "test the functionality of the code"
+                echo "test cases getting executed"
+                sh "mvn ${goaltesting}"
+            }
+        }
+         stage('quality-assurance'){
+            steps{
+                echo "checking the quality and bugs in the code"
+                sh "mvn ${goalqa}"
+                echo "code analysis done"
+                recordIssues(tools: [pmdParser()])
+              }
+            }
+          }
+        }
+        stage('package the code'){
+//use of when statement
+            when{ expression {env.GIT_BRANCH == 'origin/master'}}
+            steps{
+                echo "package the code"
+                sh "mvn ${goalpackage}"
+            }
+        }
+        }
+}
