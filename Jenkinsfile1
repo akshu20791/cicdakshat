@@ -19,7 +19,7 @@ pipeline {
            stage('codetesting'){
             steps{
                 echo "test the functionality of the code"
-                echo "test cases getting executed"
+                echo "test cases getting executed,....."
                 sh "mvn test"
             }
         }
