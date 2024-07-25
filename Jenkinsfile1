@@ -12,7 +12,7 @@ pipeline {
     stages{
         stage('checkout'){
             steps{
-                git url:'https://github.com/akshu20791/cicdakshat/'
+                git url:'https://github.com/sumeeth07/cicdakshat/'
                 echo 'checkout completed'
                 sh "echo hello ${FNAME}"
             }
