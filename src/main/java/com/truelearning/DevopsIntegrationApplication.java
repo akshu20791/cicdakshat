@@ -11,7 +11,7 @@ public class DevopsIntegrationApplication {
 
 	@GetMapping
 	public String message(){
-		return "Hey I am Lax !! this deployment is successfull";
+		return "Hey I am Laxmikanta !! this deployment is successfull";
 	}
 
 	public static void main(String[] args) {
