@@ -10,7 +10,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t laxg66/cicdcapstone:v1 .'
+                    sh 'docker build -t laxg66/cicdcapstone:v2 .'
                 }
             }
         }
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push laxg66/cicdcapstone:v1'
+                    sh 'docker push laxg66/cicdcapstone:v2'
                 }
             }
         }
