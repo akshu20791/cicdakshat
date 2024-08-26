@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: spring-boot-k8s
-          image: akshu20791/endtoendproject25may:v1 # Image that will be used to containers in the cluster
+          image: laxg66/cicdcapstone:v1 # Image that will be used to containers in the cluster
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080 # The port that the container is running on in the cluster
@@ -33,4 +33,5 @@ spec:
     - protocol: "TCP"
       port: 8080 # The port that the service is running on in the cluster
       targetPort: 8080 # The port exposed by the service
+      nodePort: 30500
   type: NodePort # type of the service.
