@@ -3,7 +3,7 @@ pipeline {
     stages{
         stage('Build Maven'){
             steps{
-                git url:'https://github.com/Pallavic9/cicdakshat.git', branch: "master"
+                git url:'https://github.com/Pallavic9/cicdakshat.git', branch: "devops1"
                sh 'mvn clean install'
             }
         }
@@ -25,7 +25,7 @@ pipeline {
         
         
         stage('Deploy to k8s'){
-            when{ expression {env.GIT_BRANCH == 'master'}}
+            when{ expression {env.GIT_BRANCH == 'devops1'}}
             steps{
                 script{
                      kubernetesDeploy (configs: 'deploymentservice.yaml' ,kubeconfigId: 'k8sconfigpwd')
