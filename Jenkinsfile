@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Build Maven') {
             steps {
@@ -8,7 +8,7 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -16,18 +16,20 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     script {
+                        // Use 'sh' to login to Docker
                         sh "echo \$PASS | docker login -u \$USER --password-stdin"
                     }
+                    // Push the Docker image after a successful login
                     sh 'docker push kuberanjitha/endtoendproject25may:v1'
                 }
             }
         }
-        
+
         stage('Deploy to k8s') {
             when {
                 expression { env.GIT_BRANCH == 'master' }
