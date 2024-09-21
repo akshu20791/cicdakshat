@@ -12,7 +12,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t KubeRanjitha/endtoendproject25may:v1 .'
+                    sh 'docker build -t kuberanjitha/endtoendproject25may:v1 .'
                 }
             }
         }
@@ -25,7 +25,7 @@ pipeline {
                         sh "echo \$PASS | docker login -u \$USER --password-stdin"
                     }
                     // Push the Docker image after a successful login
-                    sh 'docker push KubeRanjitha/endtoendproject25may:v1'
+                    sh 'docker push kuberanjitha/endtoendproject25may:v1'
                 }
             }
         }
