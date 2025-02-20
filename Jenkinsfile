@@ -4,7 +4,7 @@ pipeline {
         stage('Build Maven'){
             steps{
                 git url:'https://github.com/Mohankumaram1/cicdakshat.git', branch: "master"
-                sh 'mvn install'
+                sh 'mvn clean install'
             }
         }
         stage('Build docker image'){
