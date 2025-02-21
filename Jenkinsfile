@@ -1,35 +1,44 @@
 pipeline {
     agent any
-    stages{
-        stage('Build Maven'){
-            steps{
-                git url:'https://github.com/kalpeshdharkar/cicdakshat/', branch: "master"
-               sh 'mvn clean install'
+    environment {
+        DOCKER_IMAGE = 'kalpeshdharkar/endtoendproject25may:v1'
+    }
+    
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git url: 'https://github.com/kalpeshdharkar/cicdakshat', branch: 'master'
             }
         }
-        stage('Build docker image'){
-            steps{
-                script{
-                    sh 'docker build -t kalpesdharkar/endtoendproject25may:v1 .'
+
+        stage('Build Maven') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh "docker build -t $DOCKER_IMAGE ."
                 }
             }
         }
-          stage('Docker login') {
+
+        stage('Docker Login & Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push kalpeshdharkar/endtoendproject25may:v1'
+                    sh "docker push $DOCKER_IMAGE"
                 }
             }
         }
-        
-        
-        stage('Deploy to k8s'){
-            when{ expression {env.GIT_BRANCH == 'master'}}
-            steps{
-                script{
-                     kubernetesDeploy (configs: 'deploymentservice.yaml' ,kubeconfigId: 'k8sconfigpwd')
-                   
+
+        stage('Deploy to Kubernetes') {
+            when { expression { env.BRANCH_NAME == 'master' } }
+            steps {
+                script {
+                    kubernetesDeploy(configs: 'deploymentservice.yaml', kubeconfigId: 'k8sconfigpwd')
                 }
             }
         }
