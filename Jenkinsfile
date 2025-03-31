@@ -7,7 +7,7 @@ pipeline {
                sh 'mvn clean install'
             }
         }
-        stage('Build docker image'){
+        stage('Build docker images'){
             steps{
                 script{
                     sh 'docker build -t ManuMGowda/endtoendproject25may:v1 .'
