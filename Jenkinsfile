@@ -3,29 +3,29 @@ pipeline {
     stages{
         stage('Build Maven'){
             steps{
-                git url:'https://github.com/akshu20791/cicdakshat/', branch: "master"
-               sh 'mvn clean install'
+                git url:'https://github.com/Mohankumaram1/cicdakshat.git', branch: "master"
+                sh 'mvn clean install'
             }
         }
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t akshu20791/endtoendproject25may:v1 .'
+                    sh 'docker build -t mohankumar12/endtoendproject25may:v3 .'
                 }
             }
         }
           stage('Docker login') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]){
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push akshu20791/endtoendproject25may:v1'
+                    sh 'docker push mohankumar12/endtoendproject25may:v3'
                 }
             }
         }
         
         
         stage('Deploy to k8s'){
-            when{ expression {env.GIT_BRANCH == 'origin/master'}}
+            when{ expression {env.GIT_BRANCH == 'master'}}
             steps{
                 script{
                      kubernetesDeploy (configs: 'deploymentservice.yaml' ,kubeconfigId: 'k8sconfigpwd')
