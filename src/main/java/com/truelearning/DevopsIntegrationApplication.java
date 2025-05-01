@@ -11,7 +11,7 @@ public class DevopsIntegrationApplication {
 
 	@GetMapping
 	public String message(){
-		return "welcome to True learning by Akshat";
+		return "Successfully Done with CICD pipeline by Madhusudan VB";
 	}
 
 	public static void main(String[] args) {
