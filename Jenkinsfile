@@ -3,22 +3,22 @@ pipeline {
     stages{
         stage('Build Maven'){
             steps{
-                git url:'https://github.com/akshu20791/cicdakshat/', branch: "master"
+                git url:'https://github.com/Aditiraj551/cicdakshat.git', branch: "master"
                sh 'mvn clean install'
             }
         }
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t akshu20791/april302025project:v1 .'
+                    sh 'docker build -t aditi040/april302025project:v1 .'
                 }
             }
         }
           stage('Docker login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                    sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push akshu20791/april302025project:v1'
+                    sh "echo $PASS | docker login -u aditi040 --password-stdin"
+                    sh 'docker push aditi040/april302025project:v1'
                 }
             }
         }
