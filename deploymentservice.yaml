@@ -1,12 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment # Kubernetes resource kind we are creating
+kind: Deployment
 metadata:
   name: spring-boot-k8s-deployment
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: spring-boot-k8s
-  replicas: 2 # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
@@ -14,23 +14,21 @@ spec:
     spec:
       containers:
         - name: spring-boot-k8s
-          image: akshu20791/endtoendproject25may:v1 # Image that will be used to containers in the cluster
-          imagePullPolicy: IfNotPresent
+          image: srinivasedugutta/oct302025project:v1  # ✅ Your DockerHub image
+          imagePullPolicy: Always                     # ensures it pulls the latest from DockerHub
           ports:
-            - containerPort: 8080 # The port that the container is running on in the cluster
-
-
+            - containerPort: 8080                     # your Spring Boot app port
 ---
-
-apiVersion: v1 # Kubernetes API version
-kind: Service # Kubernetes resource kind we are creating
-metadata: # Metadata of the resource kind we are creating
-  name: springboot-k8ssvc
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-k8s-svc
 spec:
   selector:
     app: spring-boot-k8s
   ports:
-    - protocol: "TCP"
-      port: 8080 # The port that the service is running on in the cluster
-      targetPort: 8080 # The port exposed by the service
-  type: NodePort # type of the service.
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080                                # fixed port for NodePort access
+  type: NodePort
