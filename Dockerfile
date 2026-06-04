@@ -1,4 +1,8 @@
-FROM openjdk:8
+FROM httpd
+RUN apt update
+RUN apt install git -y
+RUN rm -rf /var/lib/apt/lists/*
+RUN rm -rf /usr/local/apache2/htdocs/*
+RUN git clone https://github.com/akshu20791/apachewebsite/ /usr/local/apache2/htdocs/
 EXPOSE 80
-COPY target/devops-integration.jar devops-integration.jar
-ENTRYPOINT ["java","-jar","/devops-integration.jar"]
+CMD ["httpd-foreground"]
